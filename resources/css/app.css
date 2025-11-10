@@ -9,4 +9,368 @@
     --font-sans: "Plus Jakarta Sans", "Instrument Sans", ui-sans-serif,
         system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
         "Segoe UI Symbol", "Noto Color Emoji";
+
+    --color-primary-50: oklch(0.97 0.01 250);
+    --color-primary-100: oklch(0.93 0.04 250);
+    --color-primary-200: oklch(0.87 0.08 250);
+    --color-primary-300: oklch(0.78 0.13 250);
+    --color-primary-400: oklch(0.68 0.19 250);
+    --color-primary-500: oklch(0.58 0.24 250);
+    --color-primary-600: oklch(0.5 0.27 250);
+    --color-primary-700: oklch(0.43 0.25 250);
+    --color-primary-800: oklch(0.37 0.2 250);
+    --color-primary-900: oklch(0.32 0.15 250);
+    --color-primary-950: oklch(0.23 0.1 250);
+
+    --color-secondary-50: oklch(0.97 0.02 160);
+    --color-secondary-100: oklch(0.93 0.05 160);
+    --color-secondary-200: oklch(0.87 0.1 160);
+    --color-secondary-300: oklch(0.79 0.14 160);
+    --color-secondary-400: oklch(0.71 0.18 160);
+    --color-secondary-500: oklch(0.64 0.2 160);
+    --color-secondary-600: oklch(0.55 0.2 160);
+    --color-secondary-700: oklch(0.47 0.17 160);
+    --color-secondary-800: oklch(0.4 0.13 160);
+    --color-secondary-900: oklch(0.35 0.1 160);
+    --color-secondary-950: oklch(0.25 0.07 160);
+
+    --color-accent-50: oklch(0.98 0.02 85);
+    --color-accent-100: oklch(0.95 0.05 85);
+    --color-accent-200: oklch(0.9 0.1 85);
+    --color-accent-300: oklch(0.84 0.14 85);
+    --color-accent-400: oklch(0.77 0.17 85);
+    --color-accent-500: oklch(0.71 0.18 85);
+    --color-accent-600: oklch(0.63 0.17 75);
+    --color-accent-700: oklch(0.54 0.15 70);
+    --color-accent-800: oklch(0.47 0.12 65);
+    --color-accent-900: oklch(0.41 0.1 60);
+    --color-accent-950: oklch(0.28 0.07 55);
+
+    --spacing-18: 4.5rem;
+    --spacing-88: 22rem;
+    --spacing-100: 25rem;
+    --spacing-112: 28rem;
+    --spacing-128: 32rem;
+
+    --radius-4xl: 2rem;
+
+    --shadow-soft: 0 2px 15px -3px rgb(0 0 0 / 0.07),
+        0 10px 20px -2px rgb(0 0 0 / 0.04);
+    --shadow-soft-lg: 0 10px 40px -10px rgb(0 0 0 / 0.1);
+}
+
+* {
+    border-color: theme(colors.slate.200);
+}
+
+
+body {
+    background-color: theme(colors.slate.50);
+    color: theme(colors.slate.900);
+    font-family: theme(fontFamily.sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: theme(fontFamily.sans);
+    font-weight: 700;
+    color: theme(colors.slate.900);
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px theme(colors.primary.500 / 0.5);
+}
+
+.btn-primary {
+    background-color: theme(colors.primary.500);
+    color: white;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+.btn-primary:hover {
+    background-color: theme(colors.primary.600);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    transform: translateY(-2px);
+}
+
+.btn-secondary {
+    border: 2px solid theme(colors.slate.300);
+    color: theme(colors.slate.700);
+}
+
+.btn-secondary:hover {
+    border-color: theme(colors.primary.500);
+    color: theme(colors.primary.500);
+}
+
+.btn-accent {
+    background-color: theme(colors.accent.500);
+    color: white;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+}
+
+.btn-accent:hover {
+    background-color: theme(colors.accent.600);
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+}
+
+.card {
+    background-color: white;
+    border-radius: 0.75rem;
+    border: 1px solid theme(colors.slate.200);
+    padding: 1.5rem;
+    transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover {
+    background-color: white;
+    border-radius: 0.75rem;
+    border: 1px solid theme(colors.slate.200);
+    padding: 1.5rem;
+    transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-hover:hover {
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+    border-color: theme(colors.primary.300);
+}
+
+.card-elevated {
+    background-color: white;
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    box-shadow: var(--shadow-soft);
+    transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-elevated:hover {
+    box-shadow: var(--shadow-soft-lg);
+}
+
+.input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid theme(colors.slate.300);
+    border-radius: 0.5rem;
+    transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.input:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px theme(colors.primary.500 / 0.5);
+    border-color: transparent;
+}
+
+.section-padding {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+}
+
+@media (min-width: 768px) {
+    .section-padding {
+        padding-top: 6rem;
+        padding-bottom: 6rem;
+    }
+}
+
+.text-gradient {
+    background-image: linear-gradient(
+        to right,
+        theme(colors.primary.600),
+        theme(colors.secondary.600)
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+.smooth-scroll {
+    scroll-behavior: smooth;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in {
+    animation: fadeIn 0.5s ease-in forwards;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-slide-up {
+    animation: slideUp 0.5s ease-out;
+}
+
+@keyframes blob {
+    0%,
+    100% {
+        transform: translate(0, 0) scale(1);
+    }
+    25% {
+        transform: translate(20px, -20px) scale(1.1);
+    }
+    50% {
+        transform: translate(-20px, 20px) scale(0.9);
+    }
+    75% {
+        transform: translate(20px, 20px) scale(1.05);
+    }
+}
+
+.animate-blob {
+    animation: blob 8s ease-in-out infinite;
+}
+
+@keyframes float-slow {
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+.animate-float-slow {
+    animation: float-slow 6s ease-in-out infinite;
+}
+
+@keyframes float-medium {
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-15px);
+    }
+}
+
+.animate-float-medium {
+    animation: float-medium 4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.animate-shimmer {
+    background: linear-gradient(
+        to right,
+        transparent 0%,
+        rgba(255, 255, 255, 0.3) 50%,
+        transparent 100%
+    );
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite;
+}
+
+@keyframes gradient-shift {
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+.animate-gradient-text {
+    background-size: 200% auto;
+    animation: gradient-shift 3s ease infinite;
+}
+
+.hover-lift {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-lift:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1),
+        0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.bg-grid-slate-100 {
+    background-image: linear-gradient(
+            to right,
+            rgb(241 245 249 / 0.3) 1px,
+            transparent 1px
+        ),
+        linear-gradient(to bottom, rgb(241 245 249 / 0.3) 1px, transparent 1px);
+    background-size: 4rem 4rem;
+}
+
+.bg-grid-white {
+    background-image: linear-gradient(
+            to right,
+            rgba(255, 255, 255, 0.05) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            to bottom,
+            rgba(255, 255, 255, 0.05) 1px,
+            transparent 1px
+        );
+    background-size: 4rem 4rem;
+}
+
+.bg-dot-pattern {
+    background-image: radial-gradient(circle, #e2e8f0 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+.stagger-1 {
+    animation-delay: 0.1s;
+}
+.stagger-2 {
+    animation-delay: 0.2s;
+}
+.stagger-3 {
+    animation-delay: 0.3s;
+}
+
+.animation-delay-2000 {
+    animation-delay: 2s;
+}
+
+.animation-delay-4000 {
+    animation-delay: 4s;
 }
