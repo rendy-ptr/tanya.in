@@ -72,7 +72,7 @@
                                     <svg class="absolute -bottom-1 left-0 w-full" height="4" viewBox="0 0 100 4"
                                         preserveAspectRatio="none">
                                         <path d="M0,2 Q25,0 50,2 T100,2" fill="none" stroke="#10b981" stroke-width="2"
-                                            class="animate-draw-line" style="animation-delay: 0.2s;" />
+                                            class="animate-draw-line" />
                                     </svg>
                                 </span>
                             </span>, dan
@@ -82,7 +82,7 @@
                                     <svg class="absolute -bottom-1 left-0 w-full" height="4" viewBox="0 0 100 4"
                                         preserveAspectRatio="none">
                                         <path d="M0,2 Q25,0 50,2 T100,2" fill="none" stroke="#a855f7" stroke-width="2"
-                                            class="animate-draw-line" style="animation-delay: 0.4s;" />
+                                            class="animate-draw-line" />
                                     </svg>
                                 </span>
                             </span>.
@@ -658,7 +658,8 @@
     </section>
 
     <section
-        class="relative bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-hidden py-20 lg:py-32" id="komunitas">
+        class="relative bg-linear-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-hidden py-20 lg:py-32"
+        id="komunitas">
         <div class="absolute inset-0 bg-grid-white opacity-5"></div>
 
         <div class="absolute top-0 left-0 w-96 h-96 bg-blue-500 rounded-full blur-3xl opacity-20 animate-blob"></div>
@@ -699,7 +700,7 @@
                 </p>
 
                 <div class="flex flex-col sm:flex-row gap-4 justify-center pt-6">
-                    <a href="#"
+                    <a href="{{ route('auth.register') }}"
                         class="group relative inline-flex items-center justify-center px-8 py-5 bg-white text-slate-900 rounded-2xl font-bold text-lg overflow-hidden hover:scale-105 transition-all shadow-2xl hover:shadow-3xl">
                         <div
                             class="absolute inset-0 w-full h-full bg-linear-to-r from-transparent via-blue-200/50 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000">
@@ -712,7 +713,7 @@
                                 d="M13 7l5 5m0 0l-5 5m5-5H6" />
                         </svg>
                     </a>
-                    <a href="#"
+                    <a href="{{ route('auth.register') }}"
                         class="group inline-flex items-center justify-center px-8 py-5 border-2 border-white text-white rounded-2xl font-bold text-lg hover:bg-white hover:text-slate-900 transition-all hover:scale-105">
                         <span>Sudah Punya Akun?</span>
                     </a>

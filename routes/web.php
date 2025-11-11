@@ -4,4 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn() => view('pages.welcome'))->name('home');
 
-// Route::get('/about', fn() => view('about'))->name('about');
+Route::prefix('auth')->group(function () {
+    Route::get('/register', fn() => view('pages.auth.register'))->name('auth.register');
+    Route::get('/login', fn() => view('pages.auth.login'))->name('auth.login');
+});

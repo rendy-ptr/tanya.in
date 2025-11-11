@@ -63,7 +63,6 @@
     border-color: theme(colors.slate.200);
 }
 
-
 body {
     background-color: theme(colors.slate.50);
     color: theme(colors.slate.900);
@@ -373,4 +372,16 @@ h6 {
 
 .animation-delay-4000 {
     animation-delay: 4s;
+}
+
+@keyframes draw-line {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+.animate-draw-line {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    animation: draw-line 1s ease-out forwards;
 }
