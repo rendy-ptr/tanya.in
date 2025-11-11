@@ -23,7 +23,7 @@
                         class="font-semibold text-slate-900 hover:text-blue-600 transition-colors">Masuk</a></p>
             </div>
 
-            <form method="POST" action="#" class="mt-8 space-y-5">
+            <form method="POST" action="{{ route('auth.register.store') }}" class="mt-8 space-y-5">
                 @csrf
                 <div>
                     <label for="name" class="block text-sm font-semibold text-slate-900 mb-1.5">
@@ -96,3 +96,4 @@
         </div>
     </section>
 @endsection
+
