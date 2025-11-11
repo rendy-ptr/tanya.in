@@ -1,12 +1,14 @@
 @php
+    $onQuestionsPage = request()->is('questions*');
+
     $menuItems = [
-        ['label' => 'Beranda', 'href' => '#hero-content'],
-        ['label' => 'Tutorial', 'href' => '#tutorial'],
-        ['label' => 'Komunitas', 'href' => '#komunitas'],
-        ['label' => 'Pertanyaan', 'href' => '#'],
+        ['label' => 'Beranda', 'href' => $onQuestionsPage ? '/#hero-content' : '#hero-content'],
+        ['label' => 'Tutorial', 'href' => $onQuestionsPage ? '/#tutorial' : '#tutorial'],
+        ['label' => 'Komunitas', 'href' => $onQuestionsPage ? '/#komunitas' : '#komunitas'],
+        ['label' => 'Pertanyaan', 'href' => route('questions.index')],
     ];
     $dropdownItems = [
-        ['label' => 'Profil', 'href' => '#'],
+        ['label' => 'Profile', 'href' => '#'],
         ['label' => 'Pengaturan', 'href' => '#'],
         ['label' => 'Keluar', 'href' => route('auth.logout')],
     ];

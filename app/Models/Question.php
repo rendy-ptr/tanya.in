@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
+use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Question extends Model
 {
@@ -38,5 +39,22 @@ class Question extends Model
     public function isOwnedBy(User $user): bool
     {
         return $this->user_id === $user->id;
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($question) {
+            if (empty($question->slug)) {
+                $question->slug = Str::slug($question->title);
+            }
+        });
+
+        static::updating(function ($question) {
+            if ($question->isDirty('title')) {
+                $question->slug = Str::slug($question->title);
+            }
+        });
     }
 }
