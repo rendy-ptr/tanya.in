@@ -49,26 +49,7 @@
                     @enderror
                 </div>
 
-                <div>
-                    <label for="password" class="block text-sm font-semibold text-slate-900 mb-1.5">
-                        Password
-                    </label>
-                    <input id="password" type="password" name="password" required
-                        class="w-full px-4 py-3 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-slate-900 focus:ring-1 focus:ring-slate-900 transition-all {{ $errors->has('password') ? 'border border-red-500 bg-red-50' : 'border border-slate-200 bg-slate-50' }}"
-                        placeholder="Minimal 8 karakter">
-                    @error('password')
-                        <p class="mt-1.5 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div>
-                    <label for="password_confirmation" class="block text-sm font-semibold text-slate-900 mb-1.5">
-                        Konfirmasi Password
-                    </label>
-                    <input id="password_confirmation" type="password" name="password_confirmation" required
-                        class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-slate-900 focus:ring-1 focus:ring-slate-900 transition-all"
-                        placeholder="Ulangi password Anda">
-                </div>
+                @livewire('register-password-fields')
 
                 <div class="flex items-start">
                     <input id="terms" name="terms" type="checkbox" required
@@ -96,4 +77,3 @@
         </div>
     </section>
 @endsection
-

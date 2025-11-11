@@ -41,17 +41,7 @@
                         <p class="mt-1.5 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
-                <div>
-                    <label for="password" class="block text-sm font-semibold text-slate-900 mb-1.5">
-                        Password
-                    </label>
-                    <input id="password" type="password" name="password" required
-                        class="w-full px-4 py-3 bg-slate-50 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-slate-900 focus:ring-1 focus:ring-slate-900 transition-all {{ $errors->has('password') ? 'border border-red-500 bg-red-50' : 'border border-slate-200' }}"
-                        placeholder="Masukkan password Anda">
-                    @error('password')
-                        <p class="mt-1.5 text-sm text-red-600">{{ $message }}</p>
-                    @enderror
-                </div>
+                @livewire('login-password-field')
                 <div class="flex items-center justify-between">
                     <div class="flex items-center">
                         <input id="remember_me" name="remember" type="checkbox"

@@ -1,14 +1,15 @@
 @php
     $onQuestionsPage = request()->is('questions*');
+    $onProfilePage = request()->is('profile*');
 
     $menuItems = [
-        ['label' => 'Beranda', 'href' => $onQuestionsPage ? '/#hero-content' : '#hero-content'],
-        ['label' => 'Tutorial', 'href' => $onQuestionsPage ? '/#tutorial' : '#tutorial'],
-        ['label' => 'Komunitas', 'href' => $onQuestionsPage ? '/#komunitas' : '#komunitas'],
+        ['label' => 'Beranda', 'href' => $onQuestionsPage || $onProfilePage ? '/#hero-content' : '#hero-content'],
+        ['label' => 'Tutorial', 'href' => $onQuestionsPage || $onProfilePage ? '/#tutorial' : '#tutorial'],
+        ['label' => 'Komunitas', 'href' => $onQuestionsPage || $onProfilePage ? '/#komunitas' : '#komunitas'],
         ['label' => 'Pertanyaan', 'href' => route('questions.index')],
     ];
     $dropdownItems = [
-        ['label' => 'Profile', 'href' => '#'],
+        ['label' => 'Profile', 'href' => route('profile.show')],
         ['label' => 'Pengaturan', 'href' => '#'],
         ['label' => 'Keluar', 'href' => route('auth.logout')],
     ];
@@ -73,7 +74,7 @@
                     </button>
 
                     <div class="hidden lg:block">
-                        <livewire:dropdown-user :dropdown-items="$dropdownItems" />
+                        @livewire('dropdown-user', ['dropdownItems' => $dropdownItems])
                     </div>
 
                 @endauth

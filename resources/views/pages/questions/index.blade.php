@@ -76,7 +76,7 @@
                                         {{ $question->category->name }}
                                     </span>
                                 </div>
-
+                                
                                 <h3
                                     class="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">
                                     <a href="{{ route('questions.show', $question->slug) }}" class="hover:underline">
