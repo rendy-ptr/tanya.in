@@ -28,7 +28,7 @@
                 </div>
             @endif
 
-            <form method="POST" action="#" class="mt-8 space-y-5">
+            <form method="POST" action="{{ route('auth.login.store') }}" class="mt-8 space-y-5">
                 @csrf
                 <div>
                     <label for="email" class="block text-sm font-semibold text-slate-900 mb-1.5">
