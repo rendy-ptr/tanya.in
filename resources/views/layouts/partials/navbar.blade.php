@@ -1,12 +1,23 @@
 @php
     $onQuestionsPage = request()->is('questions*');
     $onProfilePage = request()->is('profile*');
+    $onCategoriesPage = request()->is('categories*');
 
     $menuItems = [
-        ['label' => 'Beranda', 'href' => $onQuestionsPage || $onProfilePage ? '/#hero-content' : '#hero-content'],
-        ['label' => 'Tutorial', 'href' => $onQuestionsPage || $onProfilePage ? '/#tutorial' : '#tutorial'],
-        ['label' => 'Komunitas', 'href' => $onQuestionsPage || $onProfilePage ? '/#komunitas' : '#komunitas'],
+        [
+            'label' => 'Beranda',
+            'href' => $onQuestionsPage || $onProfilePage || $onCategoriesPage ? '/#hero-content' : '#hero-content',
+        ],
+        [
+            'label' => 'Tutorial',
+            'href' => $onQuestionsPage || $onProfilePage || $onCategoriesPage ? '/#tutorial' : '#tutorial',
+        ],
+        [
+            'label' => 'Komunitas',
+            'href' => $onQuestionsPage || $onProfilePage || $onCategoriesPage ? '/#komunitas' : '#komunitas',
+        ],
         ['label' => 'Pertanyaan', 'href' => route('questions.index')],
+        ['label' => 'Kategori', 'href' => route('categories.index')],
     ];
     $dropdownItems = [
         ['label' => 'Profile', 'href' => route('profile.show')],
