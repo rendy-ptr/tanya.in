@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Question;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use App\Helpers\Upload;
+
 
 class QuestionController extends Controller
 {
@@ -24,16 +28,6 @@ class QuestionController extends Controller
         $questions = $query->latest()->paginate(10);
 
         return view('pages.questions.index', compact('questions'));
-    }
-
-    public function show($slug)
-    {
-
-        $question = Question::with(['user', 'category', 'answers.user'])
-            ->where('slug', $slug)
-            ->firstOrFail();
-
-        return view('pages.questions.show', compact('question'));
     }
 
     public function create()
@@ -57,25 +51,34 @@ class QuestionController extends Controller
             'content.min' => 'Isi pertanyaan minimal 20 karakter',
             'category_id.required' => 'Kategori wajib dipilih',
             'category_id.exists' => 'Kategori tidak valid',
-            'image.image' => 'File harus berupa gambar',
-            'image.mimes' => 'Format gambar harus: jpeg, png, jpg, atau gif',
-            'image.max' => 'Ukuran gambar maksimal 2MB',
+            'image.image' => 'File yang diunggah harus berupa gambar.',
+            'image.mimes' => 'Format gambar hanya diperbolehkan: jpeg, png, jpg, atau gif.',
+            'image.max'   => 'Ukuran gambar maksimal 2 MB.',
         ]);
 
+        $data = [
+            'title'       => $validated['title'],
+            'content'     => $validated['content'],
+            'category_id' => $validated['category_id'],
+            'user_id'     => Auth::id(),
+        ];
+
         if ($request->hasFile('image')) {
-            $uploadedFileUrl = Cloudinary::upload($request->file('image')->getRealPath(), [
-                'folder' => 'tanyain/questions',
-                'resource_type' => 'image'
-            ])->getSecurePath();
-
-            $validated['image'] = $uploadedFileUrl;
+            try {
+                $upload = new Upload();
+                $data['image'] = $upload->uploadImage($request->file('image'), Auth::id());
+                flash()->info('Gambar berhasil diunggah.');
+            } catch (\Exception $e) {
+                Log::error('Gagal upload ke Cloudinary', ['error' => $e->getMessage()]);
+                flash()->error('Gagal mengunggah gambar: ' . $e->getMessage());
+                return back()->withInput();
+            }
         }
+        $question = Question::create($data);
 
-        $validated['user_id'] = Auth::id();
 
-        Question::create($validated);
         flash()->success('Pertanyaan berhasil dibuat!');
-        return redirect()->route('questions.index');
+        return redirect()->route('questions.show', $question->slug);
     }
 
     public function edit($slug)
@@ -114,20 +117,49 @@ class QuestionController extends Controller
             'image.max' => 'Ukuran gambar maksimal 2MB',
         ]);
 
+        $updateData = [
+            'title' => $validated['title'],
+            'content' => $validated['content'],
+            'category_id' => $validated['category_id'],
+            'user_id' => Auth::id(),
+        ];
+
+        $oldImageUrl = $question->image;
+
         if ($request->boolean('remove_image')) {
-            $validated['image'] = null;
+            $updateData['image'] = null;
+            if ($oldImageUrl) {
+                $this->deleteCloudinaryImage($oldImageUrl);
+            }
+            flash()->info('Gambar berhasil dihapus.');
         } elseif ($request->hasFile('image')) {
-            $uploadedFileUrl = Cloudinary::upload($request->file('image')->getRealPath(), [
-                'folder' => 'tanyain/questions',
-                'resource_type' => 'image'
-            ])->getSecurePath();
+            try {
+                $file = $request->file('image');
 
-            $validated['image'] = $uploadedFileUrl;
+                $uploadResult = Cloudinary::upload($file->getRealPath(), [
+                    'folder' => 'tanyain/questions',
+                    'resource_type' => 'image',
+                    'overwrite' => true,
+                    'invalidate' => true,
+                ]);
+
+                $newImageUrl = $uploadResult->getSecurePath();
+                $updateData['image'] = $newImageUrl;
+
+                if ($oldImageUrl) {
+                    $this->deleteCloudinaryImage($oldImageUrl);
+                }
+
+                flash()->info('Gambar berhasil diperbarui.');
+            } catch (\Exception $e) {
+                flash()->error('Gagal upload gambar: ' . $e->getMessage());
+                return back()->withInput();
+            }
         }
+        $question->update($updateData);
 
-        $question->update($validated);
         flash()->success('Pertanyaan berhasil diperbarui!');
-        return redirect()->route('questions.show', $question);
+        return redirect()->route('questions.show', $question->fresh()->slug);
     }
 
     public function destroy($slug)
@@ -140,5 +172,31 @@ class QuestionController extends Controller
         $question->delete();
         flash()->success('Pertanyaan berhasil dihapus!');
         return redirect()->route('questions.index');
+    }
+
+    public function show($slug)
+    {
+
+        $question = Question::with(['user', 'category', 'answers.user'])
+            ->where('slug', $slug)
+            ->firstOrFail();
+
+        return view('pages.questions.show', compact('question'));
+    }
+
+
+
+    private function deleteCloudinaryImage(string $imageUrl): void
+    {
+        try {
+            $publicId = preg_replace('/^.*tanyain\/questions\//', 'tanyain/questions/', $imageUrl);
+            $publicId = pathinfo($publicId, PATHINFO_FILENAME);
+
+            Cloudinary::destroy($publicId);
+        } catch (\Exception $e) {
+            Log::warning('Gagal menghapus gambar Cloudinary: ' . $e->getMessage(), [
+                'url' => $imageUrl
+            ]);
+        }
     }
 }

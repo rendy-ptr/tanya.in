@@ -30,7 +30,7 @@
                     </span>
                 </div>
 
-                <h1 class="text-3xl lg:text-4xl font-black text-slate-900 mb-6">{{ $question->title }}</h1>
+                <h1 class="text-3xl lg:text-4xl font-black text-slate-900 mb-6 wrap-break-word">{{ $question->title }}</h1>
 
                 <div class="flex items-center gap-4 pb-6 mb-6 border-b border-slate-200">
                     <div class="flex items-center gap-3">
@@ -44,12 +44,15 @@
                 </div>
 
                 <div class="prose prose-slate max-w-none mb-6">
-                    <p class="text-lg text-slate-700 leading-relaxed whitespace-pre-line">{{ $question->content }}</p>
+                    <p class="text-lg text-slate-700 leading-relaxed whitespace-pre-line wrap-break-word">
+                        {{ $question->content }}
+                    </p>
                 </div>
+
 
                 @if ($question->image)
                     <div class="mb-6">
-                        <img src="{{ asset('storage/' . $question->image) }}" alt="Question image"
+                        <img src="{{ $question->image }}" alt="{{ $question->image }}"
                             class="rounded-xl max-w-full h-auto border border-slate-200">
                     </div>
                 @endif
@@ -57,7 +60,7 @@
                 @auth
                     @if ($question->isOwnedBy(auth()->user()))
                         <div class="flex items-center gap-3 pt-6 border-t border-slate-200">
-                            <a href="#"
+                            <a href="{{ route('questions.edit', $question->slug) }}"
                                 class="inline-flex items-center gap-2 px-4 py-2 bg-slate-100 text-slate-700 rounded-lg font-semibold hover:bg-slate-200 transition-colors">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -65,7 +68,7 @@
                                 </svg>
                                 <span>Edit</span>
                             </a>
-                            <form action="#" method="POST"
+                            <form action="{{ route('questions.destroy', $question->slug) }}" method="POST"
                                 onsubmit="return confirm('Yakin ingin menghapus pertanyaan ini?')">
                                 @csrf
                                 @method('DELETE')

@@ -11,7 +11,7 @@
                     komunitas</p>
 
                 @auth
-                    <a href="#"
+                    <a href="{{ route('questions.create') }}"
                         class="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 transition-all shadow-lg hover:shadow-xl hover:scale-105">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
@@ -76,7 +76,7 @@
                                         {{ $question->category->name }}
                                     </span>
                                 </div>
-                                
+
                                 <h3
                                     class="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">
                                     <a href="{{ route('questions.show', $question->slug) }}" class="hover:underline">
@@ -123,7 +123,7 @@
                         <h3 class="text-xl font-bold text-slate-900 mb-2">Belum Ada Pertanyaan</h3>
                         <p class="text-slate-600 mb-6">Jadilah yang pertama mengajukan pertanyaan!</p>
                         @auth
-                            <a href="#"
+                            <a href="{{ route('questions.create') }}"
                                 class="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 transition-all">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />

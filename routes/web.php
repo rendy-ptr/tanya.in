@@ -9,11 +9,6 @@ use App\Http\Controllers\CategoryController;
 
 Route::get('/', fn() => view('pages.welcome'))->name('home');
 
-Route::get('/questions', [QuestionController::class, 'index'])->name('questions.index');
-Route::get('/questions/{slug}', [QuestionController::class, 'show'])->name('questions.show');
-
-Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
-
 Route::middleware('guest')->group(function () {
     Route::get('/register', [RegisterController::class, 'index'])->name('auth.register');
     Route::post('/register', [RegisterController::class, 'store'])->name('auth.register.store');
@@ -42,3 +37,7 @@ Route::middleware('authenticated')->group(function () {
     Route::put('/questions/{slug}', [QuestionController::class, 'update'])->name('questions.update');
     Route::delete('/questions/{slug}', [QuestionController::class, 'destroy'])->name('questions.destroy');
 });
+Route::get('/questions', [QuestionController::class, 'index'])->name('questions.index');
+Route::get('/questions/{slug}', [QuestionController::class, 'show'])->name('questions.show');
+
+Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');

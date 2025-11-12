@@ -1,6 +1,7 @@
 import "./bootstrap";
 import "./mobile";
 import "./scroll";
+import "./createUploadImage"
 
 document.addEventListener("DOMContentLoaded", function () {
     const observerOptions = {
