@@ -1,15 +1,17 @@
 import Swal from "sweetalert2";
 
 document.addEventListener("DOMContentLoaded", () => {
+
     document.addEventListener("submit", function (event) {
         const form = event.target;
 
-        if (form.id !== "delete-form") return;
+
+        if (form.id !== "delete-category") return;
 
         event.preventDefault();
 
         Swal.fire({
-            title: "Yakin ingin menghapus pertanyaan ini?",
+            title: "Yakin ingin menghapus kategori ini?",
             text: "Tindakan ini tidak dapat dibatalkan!",
             icon: "warning",
             showCancelButton: true,

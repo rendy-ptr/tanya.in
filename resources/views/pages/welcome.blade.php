@@ -527,28 +527,6 @@
                             </p>
                             <ul class="space-y-3">
                                 <li
-                                    class="flex items-start gap-3 group cursor-default opacity-0 animate-fade-in stagger-1">
-                                    <div
-                                        class="w-6 h-6 bg-amber-100 rounded-lg flex items-center justify-center shrink-0 group-hover:bg-amber-200 transition-colors">
-                                        <svg class="w-4 h-4 text-amber-600" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd"
-                                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" />
-                                        </svg>
-                                    </div>
-                                    <span class="text-slate-700">Upvote jawaban yang membantu</span>
-                                </li>
-                                <li
-                                    class="flex items-start gap-3 group cursor-default opacity-0 animate-fade-in stagger-2">
-                                    <div
-                                        class="w-6 h-6 bg-amber-100 rounded-lg flex items-center justify-center shrink-0 group-hover:bg-amber-200 transition-colors">
-                                        <svg class="w-4 h-4 text-amber-600" fill="currentColor" viewBox="0 0 20 20">
-                                            <path fill-rule="evenodd"
-                                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" />
-                                        </svg>
-                                    </div>
-                                    <span class="text-slate-700">Tandai jawaban terbaik</span>
-                                </li>
-                                <li
                                     class="flex items-start gap-3 group cursor-default opacity-0 animate-fade-in stagger-3">
                                     <div
                                         class="w-6 h-6 bg-amber-100 rounded-lg flex items-center justify-center shrink-0 group-hover:bg-amber-200 transition-colors">
@@ -558,6 +536,28 @@
                                         </svg>
                                     </div>
                                     <span class="text-slate-700">Bantu orang lain dengan menjawab</span>
+                                </li>
+                                <li
+                                    class="flex items-start gap-3 group cursor-default opacity-0 animate-fade-in stagger-4">
+                                    <div
+                                        class="w-6 h-6 bg-amber-100 rounded-lg flex items-center justify-center shrink-0 group-hover:bg-amber-200 transition-colors">
+                                        <svg class="w-4 h-4 text-amber-600" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd"
+                                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" />
+                                        </svg>
+                                    </div>
+                                    <span class="text-slate-700">Dapatkan koneksi berharga</span>
+                                </li>
+                                <li
+                                    class="flex items-start gap-3 group cursor-default opacity-0 animate-fade-in stagger-5">
+                                    <div
+                                        class="w-6 h-6 bg-amber-100 rounded-lg flex items-center justify-center shrink-0 group-hover:bg-amber-200 transition-colors">
+                                        <svg class="w-4 h-4 text-amber-600" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd"
+                                                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" />
+                                        </svg>
+                                    </div>
+                                    <span class="text-slate-700">Jadilah bagian dari komunitas belajar</span>
                                 </li>
                             </ul>
                         </div>

@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
 
                 if (removeOverlay) removeOverlay.classList.add("hidden");
-                
+
                 if (uploadSection) {
                     uploadSection.classList.remove("hidden");
                     uploadSection.scrollIntoView({ behavior: "smooth" });

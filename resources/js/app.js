@@ -1,9 +1,11 @@
 import "./bootstrap";
 import "./mobile";
 import "./scroll";
-import "./createUploadImage"
-import "./updateUploadImage"
-import "./deleteForm"
+import "./createUploadImage";
+import "./updateUploadImage";
+import "./deleteCategory";
+import "./deleteForm";
+import "./deleteAnswer";
 
 document.addEventListener("DOMContentLoaded", function () {
     const observerOptions = {

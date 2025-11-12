@@ -34,13 +34,17 @@ class CategoryController extends Controller
         return redirect()->route('categories.index');
     }
 
-    public function edit(Category $category)
+    public function edit($slug)
     {
+        $query = Category::where('slug', $slug);
+        $category = $query->firstOrFail();
         return view('pages.categories.edit', compact('category'));
     }
 
-    public function update(Request $request, Category $category)
+    public function update(Request $request, $slug)
     {
+        $query = Category::where('slug', $slug);
+        $category = $query->firstOrFail();
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255', 'unique:categories,name,' . $category->id],
         ], [
@@ -54,8 +58,11 @@ class CategoryController extends Controller
         return redirect()->route('categories.index');
     }
 
-    public function destroy(Category $category)
+    public function destroy($slug)
     {
+        $query = Category::where('slug', $slug);
+        $category = $query->firstOrFail();
+
         if ($category->questions()->count() > 0) {
             flash()->error('Kategori tidak dapat dihapus karena masih memiliki pertanyaan!');
             return back();

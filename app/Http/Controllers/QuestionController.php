@@ -85,7 +85,7 @@ class QuestionController extends Controller
     {
         $question = Question::where('slug', $slug)->firstOrFail();
         if (!$question->isOwnedBy(Auth::user())) {
-            flash()->error('Anda tidak memiliki izin untuk mengedit pertanyaan ini!');
+            abort(403, 'Anda tidak memiliki izin untuk mengedit pertanyaan ini!');
         }
         $categories = Category::orderBy('name')->get();
 
@@ -96,8 +96,7 @@ class QuestionController extends Controller
     {
         $question = Question::where('slug', $slug)->firstOrFail();
         if (!$question->isOwnedBy(Auth::user())) {
-            flash()->error('Anda tidak memiliki izin untuk mengedit pertanyaan ini!');
-            return redirect()->route('questions.show', $question->slug);
+            abort(403, 'Anda tidak memiliki izin untuk mengedit pertanyaan ini!');
         }
 
         $validated = $request->validate([
@@ -161,7 +160,7 @@ class QuestionController extends Controller
     {
         $question = Question::where('slug', $slug)->firstOrFail();
         if (!$question->isOwnedBy(Auth::user())) {
-            flash()->error('Anda tidak memiliki izin untuk menghapus pertanyaan ini!');
+            abort(403, 'Anda tidak memiliki izin untuk menghapus pertanyaan ini!');
         }
 
         $question->delete();

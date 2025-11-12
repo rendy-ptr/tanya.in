@@ -27,15 +27,20 @@ Route::middleware('authenticated')->group(function () {
 
     Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
     Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
-    Route::get('/categories/{category}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
-    Route::put('/categories/{category}', [CategoryController::class, 'update'])->name('categories.update');
-    Route::delete('/categories/{category}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+    Route::get('/categories/{slug}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
+    Route::put('/categories/{slug}', [CategoryController::class, 'update'])->name('categories.update');
+    Route::delete('/categories/{slug}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 
     Route::get('/questions/create', [QuestionController::class, 'create'])->name('questions.create');
     Route::post('/questions', [QuestionController::class, 'store'])->name('questions.store');
     Route::get('/questions/{slug}/edit', [QuestionController::class, 'edit'])->name('questions.edit');
     Route::put('/questions/{slug}', [QuestionController::class, 'update'])->name('questions.update');
     Route::delete('/questions/{slug}', [QuestionController::class, 'destroy'])->name('questions.destroy');
+
+    Route::post('/questions/{slug}/answers', [App\Http\Controllers\AnswerController::class, 'store'])->name('answers.store');
+    Route::get('/answers/{id}/edit', [App\Http\Controllers\AnswerController::class, 'edit'])->name('answers.edit');
+    Route::put('/answers/{id}', [App\Http\Controllers\AnswerController::class, 'update'])->name('answers.update');
+    Route::delete('/answers/{id}', [App\Http\Controllers\AnswerController::class, 'destroy'])->name('answers.destroy');
 });
 Route::get('/questions', [QuestionController::class, 'index'])->name('questions.index');
 Route::get('/questions/{slug}', [QuestionController::class, 'show'])->name('questions.show');

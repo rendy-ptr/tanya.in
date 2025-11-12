@@ -176,7 +176,7 @@
                 </div>
 
                 @forelse($user->questions()->latest()->take(5)->get() as $question)
-                    <a href="{{ route('questions.show', $question) }}"
+                    <a href="{{ route('questions.show', $question->slug) }}"
                         class="block p-4 rounded-lg hover:bg-slate-50 transition-colors mb-3 last:mb-0">
                         <div class="flex items-start justify-between gap-4">
                             <div class="flex-1 min-w-0">

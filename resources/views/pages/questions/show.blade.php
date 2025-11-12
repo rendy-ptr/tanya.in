@@ -68,8 +68,7 @@
                                 </svg>
                                 <span>Edit</span>
                             </a>
-                            <form action="{{ route('questions.destroy', $question->slug) }}" method="POST"
-                                id="delete-form">
+                            <form action="{{ route('questions.destroy', $question->slug) }}" method="POST" id="delete-form">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit"
@@ -101,6 +100,11 @@
                                 <div class="font-bold text-slate-900">{{ $answer->user->name }}</div>
                                 <div class="text-sm text-slate-500">{{ $answer->created_at->diffForHumans() }}</div>
                             </div>
+                            @if ($answer->created_at != $answer->updated_at)
+                                <span class="text-xs text-slate-500 italic ml-auto">
+                                    (diedit {{ $answer->updated_at->diffForHumans() }})
+                                </span>
+                            @endif
                         </div>
 
                         <div class="prose prose-slate max-w-none mb-4">
@@ -109,11 +113,28 @@
 
                         @auth
                             @if ($answer->isOwnedBy(auth()->user()))
-                                <div class="flex items-center gap-3">
-                                    <button
-                                        class="text-sm text-slate-600 hover:text-slate-900 font-semibold transition-colors">Edit</button>
-                                    <button
-                                        class="text-sm text-red-600 hover:text-red-700 font-semibold transition-colors">Hapus</button>
+                                <div class="flex items-center gap-3 pt-3 border-t border-slate-100">
+                                    <a href="{{ route('answers.edit', $answer) }}"
+                                        class="inline-flex items-center gap-2 text-sm text-blue-600 hover:text-blue-700 font-semibold transition-colors">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                        </svg>
+                                        <span>Edit</span>
+                                    </a>
+                                    <form action="{{ route('answers.destroy', $answer) }}" method="POST" id="delete-answer"
+                                        class="inline">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit"
+                                            class="inline-flex items-center gap-2 text-sm text-red-600 hover:text-red-700 font-semibold transition-colors">
+                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                            </svg>
+                                            <span>Hapus</span>
+                                        </button>
+                                    </form>
                                 </div>
                             @endif
                         @endauth
@@ -132,35 +153,44 @@
                 @endforelse
 
                 @auth
-                    <div class="mt-8 pt-8 border-t border-slate-200">
+                    <div class="mt-8 pt-8 border-t-2 border-slate-200">
                         <h3 class="text-xl font-bold text-slate-900 mb-4">Tulis Jawaban</h3>
-                        <form action="#" method="POST" class="space-y-4">
+                        <form action="{{ route('answers.store', $question->slug) }}" method="POST" class="space-y-4">
                             @csrf
                             <div>
                                 <textarea name="content" rows="6" required
-                                    class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-lg text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-slate-900 focus:ring-1 focus:ring-slate-900 transition-all"
-                                    placeholder="Tulis jawaban Anda di sini..."></textarea>
+                                    class="w-full px-4 py-3 bg-slate-50 border-2 {{ $errors->has('content') ? 'border-red-500' : 'border-slate-200' }} rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:bg-white focus:border-slate-900 focus:ring-2 focus:ring-slate-900/20 transition-all"
+                                    placeholder="Tulis jawaban Anda di sini... (minimal 10 karakter)"></textarea>
+                                @error('content')
+                                    <p class="mt-2 text-sm text-red-600 flex items-center gap-1">
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd"
+                                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" />
+                                        </svg>
+                                        <span>{{ $message }}</span>
+                                    </p>
+                                @enderror
                             </div>
                             <button type="submit"
-                                class="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-lg font-bold hover:bg-slate-800 transition-all">
-                                <span>Kirim Jawaban</span>
+                                class="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 transition-all shadow-lg hover:shadow-xl hover:scale-105">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                        d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                                 </svg>
+                                <span>Kirim Jawaban</span>
                             </button>
                         </form>
                     </div>
                 @else
-                    <div class="mt-8 pt-8 border-t border-slate-200 text-center">
-                        <p class="text-slate-600 mb-4">Login untuk menjawab pertanyaan ini</p>
+                    <div class="mt-8 pt-8 border-t-2 border-slate-200 text-center">
+                        <p class="text-slate-600 mb-4 font-medium">Login untuk menjawab pertanyaan ini</p>
                         <a href="{{ route('auth.login') }}"
-                            class="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-lg font-bold hover:bg-slate-800 transition-all">
-                            <span>Login</span>
+                            class="inline-flex items-center gap-2 px-6 py-3 bg-slate-900 text-white rounded-xl font-bold hover:bg-slate-800 transition-all shadow-lg hover:shadow-xl hover:scale-105">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                    d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
                             </svg>
+                            <span>Login</span>
                         </a>
                     </div>
                 @endauth
