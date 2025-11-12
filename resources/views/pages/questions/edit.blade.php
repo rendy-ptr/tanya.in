@@ -7,7 +7,7 @@
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
 
             <div class="mb-6">
-                <a href="{{ route('questions.show', $question) }}"
+                <a href="{{ route('questions.show', $question->slug) }}"
                     class="inline-flex items-center gap-2 text-slate-600 hover:text-slate-900 font-semibold transition-colors group">
                     <svg class="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor"
                         viewBox="0 0 24 24">
@@ -78,16 +78,18 @@
                             <label class="block text-sm font-semibold text-slate-900 mb-3">Gambar Saat Ini</label>
                             <div class="relative inline-block group" id="current-image-container">
                                 <img src="{{ $question->image }}" alt="Current image"
-                                    class="max-w-md h-auto rounded-lg border-2 border-slate-200" id="current-image">
-                                <div class="absolute top-3 right-3">
-                                    <label
-                                        class="flex items-center gap-2 cursor-pointer bg-white/90 backdrop-blur-sm hover:bg-white px-4 py-2.5 rounded-lg border border-slate-200 shadow-lg transition-all group-hover:scale-105">
-                                        <input type="checkbox" name="remove_image" value="1" id="remove_image_checkbox"
-                                            onchange="handleRemoveImage(this)"
-                                            class="w-4 h-4 border-slate-300 rounded text-red-600 focus:ring-2 focus:ring-red-500">
-                                        <span class="text-sm font-semibold text-slate-700">Hapus Gambar</span>
-                                    </label>
-                                </div>
+                                    class="w-full max-w-full h-auto object-contain rounded-lg border-2 border-slate-200"
+                                    id="current-image">
+                                <button type="button" id="remove-image-btn"
+                                    class="absolute top-3 right-3 bg-white/90 hover:bg-red-500 text-slate-700 hover:text-white p-2 rounded-full shadow-md transition-all duration-200 hover:scale-110"
+                                    title="Hapus Gambar">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                    </svg>
+                                </button>
+
+                                <input type="hidden" name="remove_image" id="remove_image" value="0">
 
                                 <div id="remove-overlay"
                                     class="hidden absolute inset-0 bg-red-500/20 rounded-lg backdrop-blur-sm">
@@ -104,13 +106,14 @@
                             </div>
 
                             <p class="text-sm text-slate-500 mt-2">
-                                <span class="font-semibold">Tips:</span> Upload gambar baru untuk mengganti, atau centang
-                                "Hapus Gambar" untuk menghapusnya.
+                                <span class="font-semibold">Tips:</span> Upload gambar baru untuk menggantinya atau klik
+                                "X" untuk menghapusnya.
                             </p>
                         </div>
                     @endif
 
-                    <div id="upload-section">
+                    <div id="upload-section"
+                        class="{{ $question->image ? 'hidden' : '' }} transition-all duration-300 ease-in-out">
                         <label class="block text-sm font-semibold text-slate-900 mb-2">
                             @if ($question->image)
                                 <span id="upload-label-replace">Ganti Gambar (Opsional)</span>
@@ -159,7 +162,7 @@
                             </svg>
                             <span>Simpan Perubahan</span>
                         </button>
-                        <a href="{{ route('questions.show', $question) }}"
+                        <a href="{{ route('questions.show', $question->slug) }}"
                             class="px-6 py-4 bg-slate-100 text-slate-700 rounded-xl font-bold hover:bg-slate-200 transition-colors">
                             Batal
                         </a>
@@ -171,64 +174,4 @@
         </div>
     </section>
 
-    <script>
-        function previewImage(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const preview = document.getElementById('image-preview');
-                    const container = document.getElementById('image-preview-container');
-                    const placeholder = document.getElementById('upload-placeholder');
-
-                    preview.src = e.target.result;
-                    container.classList.remove('hidden');
-                    placeholder.classList.add('hidden');
-
-                    const removeCheckbox = document.getElementById('remove_image_checkbox');
-                    if (removeCheckbox) {
-                        removeCheckbox.checked = false;
-                        document.getElementById('remove-overlay').classList.add('hidden');
-                    }
-                }
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function handleRemoveImage(checkbox) {
-            const overlay = document.getElementById('remove-overlay');
-            const uploadLabelReplace = document.getElementById('upload-label-replace');
-            const uploadLabelNew = document.getElementById('upload-label-new');
-            const imageInput = document.getElementById('image');
-            const previewContainer = document.getElementById('image-preview-container');
-            const placeholder = document.getElementById('upload-placeholder');
-
-            if (checkbox.checked) {
-                overlay.classList.remove('hidden');
-
-                if (uploadLabelReplace && uploadLabelNew) {
-                    uploadLabelReplace.classList.add('hidden');
-                    uploadLabelNew.classList.remove('hidden');
-                }
-
-                imageInput.value = '';
-                previewContainer.classList.add('hidden');
-                placeholder.classList.remove('hidden');
-            } else {
-                overlay.classList.add('hidden');
-
-                if (uploadLabelReplace && uploadLabelNew) {
-                    uploadLabelReplace.classList.remove('hidden');
-                    uploadLabelNew.classList.add('hidden');
-                }
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const imageInput = document.getElementById('image');
-            if (imageInput) {
-                imageInput.value = '';
-            }
-        });
-    </script>
 @endsection

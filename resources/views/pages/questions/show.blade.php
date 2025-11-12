@@ -69,7 +69,7 @@
                                 <span>Edit</span>
                             </a>
                             <form action="{{ route('questions.destroy', $question->slug) }}" method="POST"
-                                onsubmit="return confirm('Yakin ingin menghapus pertanyaan ini?')">
+                                id="delete-form">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit"

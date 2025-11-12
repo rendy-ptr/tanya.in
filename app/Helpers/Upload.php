@@ -19,17 +19,18 @@ class Upload
         $cloudName = config('services.cloudinary.cloud_name');
         $apiKey    = config('services.cloudinary.api_key');
         $apiSecret = config('services.cloudinary.api_secret');
-        $folder    = trim((string) config('services.cloudinary.folder'), '/');
+        $baseFolder = trim(config('services.cloudinary.base_folder', 'projects'), '/');
+        $appName    = trim(config('services.cloudinary.app_name', 'tanyain'), '/');
+        $module     = 'questions';
 
-        if (! $cloudName || ! $apiKey || ! $apiSecret) {
+        if (! $cloudName || ! $apiKey || ! $apiSecret || ! $baseFolder || ! $appName || ! $module) {
             throw ValidationException::withMessages([
                 'image' => 'Layanan upload gambar belum dikonfigurasi.',
             ]);
         }
-
+        $folderPath = trim("{$baseFolder}/{$appName}/{$module}", '/');
         $publicIdSuffix = 'question_' . $userId . '_' . Str::lower(Str::random(12));
-        $publicIdBase   = $folder ? $folder . '/tanyain/questions' : 'tanyain/questions';
-        $publicId       = trim($publicIdBase, '/') . '/' . $publicIdSuffix;
+        $publicId       = $folderPath . '/' . $publicIdSuffix;
         $timestamp      = time();
 
         $paramsToSign = [

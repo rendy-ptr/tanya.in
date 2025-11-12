@@ -2,6 +2,8 @@ import "./bootstrap";
 import "./mobile";
 import "./scroll";
 import "./createUploadImage"
+import "./updateUploadImage"
+import "./deleteForm"
 
 document.addEventListener("DOMContentLoaded", function () {
     const observerOptions = {

@@ -97,6 +97,7 @@ class QuestionController extends Controller
         $question = Question::where('slug', $slug)->firstOrFail();
         if (!$question->isOwnedBy(Auth::user())) {
             flash()->error('Anda tidak memiliki izin untuk mengedit pertanyaan ini!');
+            return redirect()->route('questions.show', $question->slug);
         }
 
         $validated = $request->validate([
@@ -122,44 +123,38 @@ class QuestionController extends Controller
             'content' => $validated['content'],
             'category_id' => $validated['category_id'],
             'user_id' => Auth::id(),
+            'image' => $question->image,
         ];
 
-        $oldImageUrl = $question->image;
+        Log::info('updateData before remove_image:', $updateData);
+        Log::info('remove_image value:', [$request->input('remove_image')]);
 
-        if ($request->boolean('remove_image')) {
-            $updateData['image'] = null;
-            if ($oldImageUrl) {
-                $this->deleteCloudinaryImage($oldImageUrl);
+        if ($request->input('remove_image') == '1' && !$request->hasFile('image')) {
+            if ($question->image) {
+                $this->deleteCloudinaryImage($question->image);
             }
+            $updateData['image'] = null;
             flash()->info('Gambar berhasil dihapus.');
-        } elseif ($request->hasFile('image')) {
+        }
+
+        if ($request->hasFile('image')) {
             try {
                 $file = $request->file('image');
-
-                $uploadResult = Cloudinary::upload($file->getRealPath(), [
-                    'folder' => 'tanyain/questions',
-                    'resource_type' => 'image',
-                    'overwrite' => true,
-                    'invalidate' => true,
-                ]);
-
-                $newImageUrl = $uploadResult->getSecurePath();
-                $updateData['image'] = $newImageUrl;
-
-                if ($oldImageUrl) {
-                    $this->deleteCloudinaryImage($oldImageUrl);
-                }
-
+                $upload = new Upload();
+                $updateData['image'] = $upload->uploadImage($file, Auth::id());
                 flash()->info('Gambar berhasil diperbarui.');
             } catch (\Exception $e) {
-                flash()->error('Gagal upload gambar: ' . $e->getMessage());
+                flash()->error('Gagal mengunggah gambar: ' . $e->getMessage());
                 return back()->withInput();
             }
         }
+
+        Log::info('UPDATED DATA AFTER ALL:', $updateData);
+
         $question->update($updateData);
 
         flash()->success('Pertanyaan berhasil diperbarui!');
-        return redirect()->route('questions.show', $question->fresh()->slug);
+        return redirect()->route('questions.show', $question->slug);
     }
 
     public function destroy($slug)
@@ -185,17 +180,42 @@ class QuestionController extends Controller
     }
 
 
+    private function extractPublicId(string $imageUrl): ?string
+    {
+        if (!str_contains($imageUrl, 'res.cloudinary.com')) {
+            return null;
+        }
+
+        return preg_match('#/upload/(?:v\d+/)?(.+?)(?:\.[a-z]+)?$#i', $imageUrl, $matches)
+            ? $matches[1]
+            : null;
+    }
+
 
     private function deleteCloudinaryImage(string $imageUrl): void
     {
         try {
-            $publicId = preg_replace('/^.*tanyain\/questions\//', 'tanyain/questions/', $imageUrl);
-            $publicId = pathinfo($publicId, PATHINFO_FILENAME);
+            $publicId = $this->extractPublicId($imageUrl);
 
-            Cloudinary::destroy($publicId);
+            if (!$publicId) {
+                Log::warning('Gagal ekstrak public_id dari URL Cloudinary', ['url' => $imageUrl]);
+                return;
+            }
+
+            $result = Cloudinary::destroy($publicId);
+
+            if ($result['result'] === 'ok') {
+                Log::info('Gambar Cloudinary berhasil dihapus', ['public_id' => $publicId]);
+            } else {
+                Log::warning('Cloudinary: gambar tidak ditemukan atau gagal dihapus', [
+                    'public_id' => $publicId,
+                    'response' => $result
+                ]);
+            }
         } catch (\Exception $e) {
-            Log::warning('Gagal menghapus gambar Cloudinary: ' . $e->getMessage(), [
-                'url' => $imageUrl
+            Log::warning('Error saat hapus Cloudinary: ' . $e->getMessage(), [
+                'url' => $imageUrl,
+                'public_id' => $publicId ?? 'unknown'
             ]);
         }
     }

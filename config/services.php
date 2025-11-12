@@ -38,7 +38,8 @@ return [
         'cloud_name' => env('CLOUDINARY_CLOUD_NAME'),
         'api_key' => env('CLOUDINARY_API_KEY'),
         'api_secret' => env('CLOUDINARY_API_SECRET'),
-    'folder'     => env('CLOUDINARY_FOLDER', 'tanyain'),
+        'base_folder'  => env('CLOUDINARY_BASE_FOLDER'),
+        'app_name'     => env('CLOUDINARY_APP_NAME'),
     ],
 
 ];
