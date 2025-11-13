@@ -21,7 +21,6 @@
     ];
     $dropdownItems = [
         ['label' => 'Profile', 'href' => route('profile.show')],
-        ['label' => 'Pengaturan', 'href' => '#'],
         ['label' => 'Keluar', 'href' => route('auth.logout')],
     ];
 @endphp

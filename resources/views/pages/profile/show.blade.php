@@ -23,7 +23,7 @@
                                 alt="{{ $user->name }}"
                                 class="w-32 h-32 rounded-2xl border-4 border-white shadow-xl object-cover">
                             <div class="pb-2">
-                                <h2 class="text-md lg:text-2xl font-black text-slate-900">{{ $user->name }}</h2>
+                                <h2 class="text-sm lg:text-2xl font-black text-slate-900">{{ $user->name }}</h2>
                                 <p class="text-slate-600">{{ $user->email }}</p>
                             </div>
                         </div>
