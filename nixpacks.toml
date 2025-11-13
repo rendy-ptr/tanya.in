@@ -1,8 +1,9 @@
 [phases.setup]
-  nixPkgs = ['php83']
+  nixPkgs = ['php84'] 
 
 [phases.build]
   cmds = [
+    'php -v',  # Debug: harus muncul PHP 8.4.x
     'composer install --optimize-autoloader --no-dev --no-interaction',
     'chmod +x railway/init-app.sh'
   ]
