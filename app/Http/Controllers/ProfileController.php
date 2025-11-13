@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Question;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
@@ -69,5 +70,17 @@ class ProfileController extends Controller
         flash()->success('Password berhasil diubah!');
 
         return redirect()->route('profile.show');
+    }
+
+    public function myQuestions()
+    {
+        $user = Auth::user();
+
+        $questions = Question::where('user_id', $user->id)
+            ->with(['category', 'answers'])
+            ->latest()
+            ->paginate(10);
+
+        return view('pages.profile.my-questions', compact('user', 'questions'));
     }
 }

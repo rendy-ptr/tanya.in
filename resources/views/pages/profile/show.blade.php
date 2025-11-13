@@ -172,7 +172,7 @@
             <div class="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
                 <div class="flex items-center justify-between mb-6">
                     <h3 class="text-2xl font-black text-slate-900">Pertanyaan Saya</h3>
-                    <a href="#" class="text-blue-600 hover:text-blue-700 font-semibold text-sm">Lihat Semua</a>
+                    <a href="{{ route('profile.my-questions') }}" class="text-blue-600 hover:text-blue-700 font-semibold text-sm">Lihat Semua</a>
                 </div>
 
                 @forelse($user->questions()->latest()->take(5)->get() as $question)
