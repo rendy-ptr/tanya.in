@@ -54,7 +54,7 @@
 
                 <div class="pt-2">
                     <button type="submit"
-                        class="w-full flex items-center justify-center px-8 py-3.5 bg-slate-900 text-white rounded-lg font-semibold hover:bg-slate-800 transition-all duration-200 group">
+                        class="w-full flex items-center justify-center px-8 py-3.5 bg-slate-900 text-white rounded-lg font-semibold hover:bg-slate-800 transition-all duration-200 group cursor-pointer shadow-lg hover:shadow-xl hover:scale-105">
                         <span>Masuk</span>
                         <svg class="w-5 h-5 ml-2 group-hover:translate-x-0.5 transition-transform" fill="none"
                             stroke="currentColor" viewBox="0 0 24 24">
