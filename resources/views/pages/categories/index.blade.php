@@ -76,7 +76,7 @@
                             <span class="text-sm text-slate-500">
                                 <span class="font-bold text-slate-900">{{ $category->questions_count }}</span> pertanyaan
                             </span>
-                            <a href="{{ route('questions.index', ['category' => $category->slug]) }}"
+                            <a href="{{ route('categories.show', $category->slug) }}"
                                 class="text-sm text-blue-600 hover:text-blue-700 font-semibold">
                                 Lihat →
                             </a>

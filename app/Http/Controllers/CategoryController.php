@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Question;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -71,5 +72,19 @@ class CategoryController extends Controller
         $category->delete();
         flash()->success('Kategori berhasil dihapus!');
         return redirect()->route('categories.index');
+    }
+
+    public function showByCategory($slug)
+    {
+        $category = Category::where('slug', $slug)->firstOrFail();
+
+        $questions = Question::with(['user', 'category', 'answers'])
+            ->whereHas('category', function ($q) use ($slug) {
+                $q->where('slug', $slug);
+            })
+            ->latest()
+            ->paginate(10);
+
+        return view('pages.categories.show', compact('category', 'questions'));
     }
 }

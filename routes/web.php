@@ -47,3 +47,4 @@ Route::get('/questions', [QuestionController::class, 'index'])->name('questions.
 Route::get('/questions/{slug}', [QuestionController::class, 'show'])->name('questions.show');
 
 Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+Route::get('/categories/{slug}', [CategoryController::class, 'showByCategory'])->name('categories.show');

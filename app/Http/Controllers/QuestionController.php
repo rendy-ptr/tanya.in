@@ -14,16 +14,10 @@ use App\Helpers\Upload;
 
 class QuestionController extends Controller
 {
+
     public function index(Request $request)
     {
         $query = Question::with(['user', 'category', 'answers']);
-
-        if ($request->has('category')) {
-            $slug = $request->get('category');
-            $query->whereHas('category', function ($q) use ($slug) {
-                $q->where('slug', $slug);
-            });
-        }
 
         $questions = $query->latest()->paginate(10);
 
