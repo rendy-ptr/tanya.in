@@ -24,7 +24,7 @@
         </div>
     </section>
 
-    <section class="py-12">
+    <section class="py-12 bg-slate-50 min-h-screen">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
 
             <div class="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
